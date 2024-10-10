@@ -3,9 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Obtiene referencias al formulario y al cuerpo de la tabla
     const form = document.getElementById('dataForm');
     const tableBody = document.querySelector('#dataTable tbody');
-
+    
     // Recupera los datos almacenados en localStorage o inicializa un array vacío
     let data = JSON.parse(localStorage.getItem('medicalData')) || [];
+    
+    // Variable para rastrear el índice de la entrada que se está editando
+    let editingIndex = null;
 
     // Añade un evento de escucha para el envío del formulario
     form.addEventListener('submit', handleFormSubmit);
@@ -13,7 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Maneja el evento de envío del formulario
     function handleFormSubmit(e) {
         e.preventDefault();
-        addEntry();
+        // Si hay una entrada en edición, actualiza la entrada
+        if (editingIndex !== null) {
+            updateEntry(editingIndex);
+        } else {
+            // Si no, añade una nueva entrada
+            addEntry();
+        }
     }
 
     // Añade una nueva entrada a los datos
@@ -63,10 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const entry = data[index];
         document.getElementById('name').value = entry.name;
         document.getElementById('role').value = entry.role;
-        form.onsubmit = (e) => {
-            e.preventDefault();
-            updateEntry(index);
-        };
+        editingIndex = index;
     };
 
     // Actualiza una entrada existente con los nuevos datos del formulario
@@ -77,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLocalStorage();
         renderTable();
         form.reset();
-        form.onsubmit = handleFormSubmit;
+        editingIndex = null;
     }
 
     // Elimina una entrada del array de datos
