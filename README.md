@@ -1,92 +1,74 @@
 
 
-# Podcaster
+# Crud Centro Medico
 
-This project is a podcast application built using React, TypeScript, and Vite. It features the ability to search for podcasts, view podcast details, and play episodes. The project also uses a caching strategy for API calls to improve performance and user experience.
+El sistema permite al personal administrativo del centro médico registrar, editar, consultar y eliminar la información de los médicos. Los datos incluyen el nombre del médico, el cargo (como "Pediatra", "Cardiólogo", etc.) y la ubicación geográfica de su área de trabajo (por ejemplo, el hospital o clínica donde trabaja y coordenadas).
 
-Hosted: [Crud](https://victordev1986.github.io/Crud/)
+Alojada: [Crud](https://victordev1986.github.io/Crud/)
 
 ## Demo
 ![Crud App](https://github.com/user-attachments/assets/e6a4f189-7d7c-40af-bf20-30d2b04928f1)
 
 
-## Quick Start Guide
+## Guía de inicio rápido
 
-## Prerequisites
+## Prerequisitos
 
 - Node.js (version 14 or later)
 - npm (version 6 or later) or yarn (version 1.22 or later)
 
-## Installation
+## Instalacion
 
-1. **Clone the repository:**
+1. **Clonar el repositorio:**
 
 ```sh
-git clone https://github.com/contracamilo/podcast-ex-test.git
-cd podcast-ex-test
+git clone https://github.com/VictorDev1986/Crud.git
+cd Crud
 ```
 
-1. **Install dependencies::**
+1. **Instalacionn de dependencias::**
 
-Using npm:
+Instalar npm:
 
 ```sh
 npm install
 ```
+**Express:**
+Es el framework que usaremos para manejar las rutas y las solicitudes HTTP.
 
-2. **Running the Development Server::**
+```sh
+npm install express
+```
+**Mongoose:**
+El ODM que conecta Node.js con MongoDB,.
 
-Start the development server to run the application locally:
+```sh
+npm install mongoose
+```
 
-Using npm:
+2. **Ejecución del servidor de desarrollo::**
+
+Inicie el servidor de desarrollo para ejecutar la aplicación localmente:
+
+Usando npm:
 
 ```sh
 npm run dev
 ```
 
-Open your browser and navigate to <http://localhost:5173/> to see the application.
+Abra su navegador y navegue a <http://localhost:3000/> para ver la aplicación.
 
-3. **Building for Production::**
-To create a production build of the application, we use Vite's build command. The production build is optimized for performance and ready for deployment.
+3**Conexion a base de datos::**
+**Crear la Base de Datos en MongoDB**
+Si usas MongoDB Atlas (base de datos en la nube):
 
-Using npm:
+Crea una cuenta en MongoDB Atlas y sigue el asistente para crear un clúster.
+En el clúster, crea una base de datos con el nombre que prefieras (por ejemplo, centro_medico).
+Obtén la cadena de conexión (MongoDB URI) desde la sección de conexión del clúster y personalízala con tu usuario, contraseña y base de datos.
+Si usas MongoDB Local (en tu computadora):
 
-```sh
-npm run build
-```
-
-This command generates a dist folder containing the optimized application. You can then deploy the contents of the dist folder to your preferred hosting service.
-
-**Serve the Production Build**
-You need to serve the contents of the dist folder using a static server. There are several ways to do this, such as using a static server like serve, deploying to a hosting service, or using a web server like Nginx or Apache.
-
-**Using serve**
-You can use a simple static file server like serve to serve the production build locally.
-
-Install serve globally if you haven't already:
-
-```sh
-npm install -g serve
-```
-
-Serve the production build:
-
-```sh
-serve -s dist
-```
-
-
-**Linting & Testing::**
-To build the application for production, use:
-
-To run the tests and lint the project, use:
-
-Using npm:
-
-```sh
-npm run test
-npm run lint
-```
+Asegúrate de tener MongoDB instalado y ejecutándose en tu máquina.
+La cadena de conexión local suele ser mongodb://localhost:3000/centro_medico, donde centro_medico es el nombre de la base de datos.
 
 **Estructura del proyecto::**
 
@@ -104,188 +86,254 @@ Crud/
 │   ├── app.js
 │   └── images/
 │
-├── src/
+├── server/
 │   ├── server.js
-│   ├── middleware/
-│   ├── routes/
-│   │   └── index.js
-│   ├── controllers/
-│   └── models/
-│
+│   └── middleware/
 └── config/
-    └── config.js
+```
+
+### Caracteristicas principales
+
+**Estructura del código**
+
+El código se divide en varias secciones:
+
+**Inicialización:** El código se ejecuta cuando el documento está completamente cargado, gracias al evento DOMContentLoaded.
+Variables y funciones: Se definen variables y funciones para manejar los datos, la tabla y las interacciones con el servidor.
+Eventos: Se establecen eventos para manejar el envío del formulario, la edición y eliminación de entradas.
+Funciones de renderizado: Se definen funciones para renderizar la tabla con los datos obtenidos del servidor.
+Funciones clave
+
+**handleFormSubmit:** Maneja el envío del formulario, actualizando o creando una nueva entrada según sea necesario.
+**addEntry:** Crea una nueva entrada y la envía al servidor para almacenarla.
+**updateEntry:** Actualiza una entrada existente y la envía al servidor para actualizarla.
+**deleteEntry:** Elimina una entrada y la elimina del servidor.
+**getGeolocation:** Obtiene la geolocalización del usuario utilizando la API de geolocalización del navegador.
+**fetchEntries:** Obtiene las entradas del servidor y las almacena en el array de datos.
+**renderTable:** Renderiza la tabla con los datos obtenidos del servidor.
+Interacciones con el servidor
+
+El código se comunica con un servidor para almacenar y recuperar los datos. Las interacciones con el servidor se realizan mediante las siguientes funciones:
+
+**fetch:** Se utiliza para enviar solicitudes al servidor y obtener respuestas.
+**JSON.stringify:** Se utiliza para convertir los datos en formato JSON para enviarlos al servidor.
+**JSON.parse:** Se utiliza para convertir las respuestas del servidor en formato JSON a objetos JavaScript.
+Seguridad
+
+El código no incluye medidas de seguridad específicas, como la autenticación o la autorización. Es importante agregar estas medidas para proteger la aplicación y los datos de los usuarios.
+
+Mejoras
+
+
+### Java Script 
 
 ```
 
-### Key Features
+// Espera a que el contenido del documento esté completamente cargado antes de ejecutar el código
+document.addEventListener('DOMContentLoaded', () => {
+    // Obtiene referencias al formulario y al cuerpo de la tabla
+    const form = document.getElementById('dataForm');
+    const tableBody = document.querySelector('#dataTable tbody');
+    let editingIndex = null; // Índice del elemento que se está editando
+    let data = []; // Array para almacenar los datos
 
-Search Functionality: Allows users to search for podcasts.
-Podcast Details: Displays detailed information about a podcast, including a list of episodes.
-Episode Playback: Enables users to play podcast episodes directly within the app.
-Caching Strategy: Implements a caching strategy to store API call responses in local storage, reducing the need for repeated API requests and improving load times.
-Technical Approach
-Caching Strategy
-To optimize performance and improve the user experience, we implemented a caching strategy for API calls using local storage. This approach involves storing API responses in the browser's local storage and retrieving them when needed, thus avoiding redundant network requests.
+    // Añade un evento de escucha para el envío del formulario
+    form.addEventListener('submit', handleFormSubmit);
 
-### Hook for Fetching Data with Caching
-
-We created a custom hook, useFetch, to handle data fetching and caching:
-
-```typescript
-import { useState, useEffect } from "react";
-
-const useFetch = <T,>(
-  url: string,
-  storageKey: string,
-  expiryKey: string,
-): { data: T | null; error: string | null; loading: boolean } => {
-  const [data, setData] = useState<T | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const currentTime = new Date().getTime();
-      const savedData = localStorage.getItem(storageKey);
-      const savedExpiry = localStorage.getItem(expiryKey);
-
-      if (
-        savedData &&
-        savedExpiry &&
-        currentTime - parseInt(savedExpiry) < 2592000000 // 30 days in milliseconds
-      ) {
-        setData(JSON.parse(savedData));
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+    // Maneja el envío del formulario
+    async function handleFormSubmit(e) {
+        e.preventDefault(); // Previene el comportamiento por defecto del formulario
+        if (editingIndex !== null) {
+            await updateEntry(editingIndex); // Actualiza la entrada si se está editando
+        } else {
+            await addEntry(); // Añade una nueva entrada si no se está editando
         }
-        const result = await response.json();
-        setData(result);
-        localStorage.setItem(storageKey, JSON.stringify(result));
-        localStorage.setItem(expiryKey, currentTime.toString());
-      } catch (error) {
-        setError((error as Error).message);
-      } finally {
-        setLoading(false);
-      }
+    }
+
+    // Añade una nueva entrada
+    async function addEntry() {
+        const entry = await createEntry(); // Crea una nueva entrada
+        const response = await fetch('http://localhost:3000/entries', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(entry) // Envía la entrada como JSON
+        });
+        const newEntry = await response.json(); // Obtiene la respuesta del servidor
+        data.push(newEntry); // Añade la nueva entrada al array de datos
+        renderTable(); // Renderiza la tabla con los nuevos datos
+        form.reset(); // Resetea el formulario
+    }
+
+    // Crea una nueva entrada con los datos del formulario y la geolocalización
+    async function createEntry() {
+        const name = document.getElementById('name').value;
+        const role = document.getElementById('role').value;
+        const dateTime = new Date().toLocaleString();
+        const geolocation = await getGeolocation();
+        return { name, role, dateTime, geolocation };
+    }
+
+    // Actualiza una entrada existente
+    async function updateEntry(index) {
+        const entry = data[index];
+        entry.name = document.getElementById('name').value;
+        entry.role = document.getElementById('role').value;
+        const response = await fetch(`http://localhost:3000/entries/${entry._id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(entry) // Envía la entrada actualizada como JSON
+        });
+        const updatedEntry = await response.json(); // Obtiene la respuesta del servidor
+        data[index] = updatedEntry; // Actualiza la entrada en el array de datos
+        renderTable(); // Renderiza la tabla con los datos actualizados
+        form.reset(); // Resetea el formulario
+        editingIndex = null; // Resetea el índice de edición
+    }
+
+    // Elimina una entrada
+    async function deleteEntry(index) {
+        const entry = data[index];
+        await fetch(`http://localhost:3000/entries/${entry._id}`, {
+            method: 'DELETE'
+        });
+        data.splice(index, 1); // Elimina la entrada del array de datos
+        renderTable(); // Renderiza la tabla con los datos actualizados
+    }
+
+    // Obtiene la geolocalización del usuario
+    async function getGeolocation() {
+        return new Promise((resolve) => {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    resolve(`Lat: ${latitude}, Lon: ${longitude}`);
+                },
+                () => {
+                    resolve('Geolocalización no disponible');
+                }
+            );
+        });
+    }
+
+    // Obtiene las entradas del servidor
+    async function fetchEntries() {
+        const response = await fetch('http://localhost:3000/entries');
+        data = await response.json(); // Almacena las entradas en el array de datos
+        renderTable(); // Renderiza la tabla con los datos obtenidos
+    }
+
+    // Renderiza la tabla con los datos
+    function renderTable() {
+        tableBody.innerHTML = ''; // Limpia el cuerpo de la tabla
+        data.forEach((entry, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${entry.name}</td>
+                <td>${entry.role}</td>
+                <td>${entry.dateTime}</td>
+                <td>${entry.geolocation}</td>
+                <td class="actions">
+                    <button class="edit" onclick="editEntry(${index})">Editar</button>
+                    <button class="delete" onclick="deleteEntry(${index})">Eliminar</button>
+                </td>
+            `;
+            tableBody.appendChild(row); // Añade la fila a la tabla
+        });
+    }
+
+    // Función global para editar una entrada
+    window.editEntry = (index) => {
+        const entry = data[index];
+        document.getElementById('name').value = entry.name;
+        document.getElementById('role').value = entry.role;
+        editingIndex = index; // Establece el índice de edición
     };
 
-    fetchData();
-  }, [url, storageKey, expiryKey]);
+    // Función global para eliminar una entrada
+    window.deleteEntry = deleteEntry;
 
-  return { data, error, loading };
-};
-
-export default useFetch;
-```
-
-### Using the Custom Hook
-
-We used the useFetch hook to fetch podcast and episode details, and to implement caching for these API calls:
-
-```typescript
-export const usePodcastDetail = (podcastId: string) => {
-  const { data, error, loading } = useFetch<{
-    results: PodcastDetail[];
-  }>(
-    `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`,
-    `podcastDetail_${podcastId}`,
-    `podcastDetailExpiry_${podcastId}`,
-  );
-
-  const podcastDetail =
-    data?.results.find(
-      (item): item is PodcastDetail => "collectionName" in item,
-    ) || null;
-  const episodes =
-    data?.results.filter((item: PodcastDetail) => "trackName" in item) || [];
-
-  return {
-    podcastDetail: podcastDetail ? { ...podcastDetail, episodes } : null,
-    error,
-    loading,
-  };
-};
-```
-
-This hook retrieves episode details based on the podcast ID and episode ID. If the data is cached and not expired (within 30 days), it uses the cached data. Otherwise, it fetches the data from the API and caches it for future use.
-
-### Unit Testing Components
-
-We have implemented unit tests for our React components to ensure their functionality and reliability. Here's an example of how we tested the Header component:
-
-``` typescript
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import { Header } from "./Header";
-
-describe("Header", () => {
-  test("renders header component with title", () => {
-    render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>,
-    );
-
-    const headerElement = screen.getByTestId("header-component");
-    const titleElement = screen.getByText("Podcaster");
-
-    expect(headerElement).toBeInTheDocument();
-    expect(titleElement).toBeInTheDocument();
-  });
-
-  test("renders loading indicator when loading is true", () => {
-    render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>,
-    );
-
-    const loadingIndicator = screen.getByTestId("loading-indicator");
-
-    expect(loadingIndicator).toBeInTheDocument();
-  });
-
-  test("does not render back button on home page", () => {
-    render(
-      <MemoryRouter initialEntries={["/"]}>
-        <Header />
-      </MemoryRouter>,
-    );
-
-    const backButton = screen.queryByText("< Back");
-
-    expect(backButton).not.toBeInTheDocument();
-  });
-
-  test("renders back button on non-home pages", () => {
-    render(
-      <MemoryRouter initialEntries={["/about"]}>
-        <Header />
-      </MemoryRouter>,
-    );
-
-    const backButton = screen.getByLabelText("Back button");
-
-    expect(backButton).toBeInTheDocument();
-  });
-});
+    // Obtiene las entradas al cargar la página
+    fetchEntries();
 });
 ```
 
-Unit tests help us verify that our components render correctly and handle user interactions as expected.
+### Express
 
-## Future Improvements
+```Java Script
+// Importa los módulos necesarios
+const express = require('express');
+const mongoose = require('mongoose');
+const path = require('path');
 
-Enhanced Error Handling: Improve error handling mechanisms to provide better user feedback.
-Unit Testing: Add more comprehensive unit tests to ensure the reliability of components and hooks.
-Responsive Design: Ensure the application is fully responsive and works well on various screen sizes.
+const app = express(); // Crea una instancia de Express
+const port = 3000; // Define el puerto en el que el servidor escuchará
 
-By implementing these strategies and improvements, we aim to create a robust and user-friendly podcast application.
+// Importa y usa el middleware
+require('./middleware')(app);
+
+// Conecta a MongoDB usando Mongoose
+mongoose.connect('mongodb+srv://Victor:n9FzlbRqDpHztCPd@cluster0.yjp85.mongodb.net/', {
+    // Opciones de conexión pueden ser añadidas aquí
+});
+
+// Define el esquema de la entrada
+const entrySchema = new mongoose.Schema({
+    name: String,
+    role: String,
+    dateTime: String,
+    geolocation: String
+});
+
+// Crea un modelo basado en el esquema
+const Entry = mongoose.model('Entry', entrySchema);
+
+// Define la ruta raíz que sirve el archivo HTML
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+
+// Define la ruta para obtener todas las entradas
+app.get('/entries', async (req, res) => {
+    const entries = await Entry.find(); // Obtiene todas las entradas de la base de datos
+    res.json(entries); // Envía las entradas como respuesta en formato JSON
+});
+
+// Define la ruta para crear una nueva entrada
+app.post('/entries', async (req, res) => {
+    const newEntry = new Entry(req.body); // Crea una nueva entrada con los datos del cuerpo de la solicitud
+    await newEntry.save(); // Guarda la nueva entrada en la base de datos
+    res.json(newEntry); // Envía la nueva entrada como respuesta en formato JSON
+});
+
+// Define la ruta para actualizar una entrada existente
+app.put('/entries/:id', async (req, res) => {
+    const updatedEntry = await Entry.findByIdAndUpdate(req.params.id, req.body, { new: true }); // Actualiza la entrada con el ID especificado
+    res.json(updatedEntry); // Envía la entrada actualizada como respuesta en formato JSON
+});
+
+// Define la ruta para eliminar una entrada existente
+app.delete('/entries/:id', async (req, res) => {
+    await Entry.findByIdAndDelete(req.params.id); // Elimina la entrada con el ID especificado
+    res.sendStatus(204); // Envía un estado 204 (Sin contenido) como respuesta
+});
+
+// Inicia el servidor y escucha en el puerto especificado
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});
+```.
+
+### Mejoras a  futuro
+
+
+Agregar validación de datos para asegurarse de que los usuarios ingresen datos válidos.
+Agregar mensajes de error para informar a los usuarios de cualquier problema que surja.
+Mejorar la experiencia del usuario mediante la adición de animaciones o efectos visuales.
+Agregar funcionalidad para permitir a los usuarios filtrar o ordenar las entradas en la tabla
+
+
 
