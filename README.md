@@ -4,7 +4,7 @@
 
 This project is a podcast application built using React, TypeScript, and Vite. It features the ability to search for podcasts, view podcast details, and play episodes. The project also uses a caching strategy for API calls to improve performance and user experience.
 
-Hosted: [Podcaster](https://podcast-ex-test.vercel.app/)
+Hosted: [Crud](https://victordev1986.github.io/Crud/)
 
 ## Demo
 ![Crud App](https://github.com/user-attachments/assets/e6a4f189-7d7c-40af-bf20-30d2b04928f1)
@@ -88,69 +88,33 @@ npm run test
 npm run lint
 ```
 
-**Project Structure::**
+**Estructura del proyecto::**
 
 ```sh
-.
-├── App.tsx
-├── api
-├── assets
-├── components
-│   ├── AudioPlayer
-│   │   ├── AudioPlayer.spec.tsx
-│   │   └── AudioPlayer.tsx
-│   ├── Grid
-│   │   └── Grid.tsx
-│   ├── Header
-│   │   ├── Header.spec.tsx
-│   │   └── Header.tsx
-│   ├── Layout
-│   │   ├── MainLayout.spec.tsx
-│   │   └── MainLayout.tsx
-│   ├── Loader
-│   │   └── Loader.tsx
-│   ├── SearchField
-│   │   ├── SearchField.tsx
-│   │   └── SerachField.spec.tsx
-│   ├── SidePanel
-│   │   ├── SidePanel.spec.tsx
-│   │   └── SidePanel.tsx
-│   └── Tile
-│       ├── Tile.spec.tsx
-│       └── Tile.tsx
-├── context
-│   └── PageContext.tsx
-├── hooks
-│   ├── useFetchApi.tsx
-│   ├── usePodcast.tsx
-│   └── usePodcastContext.tsx
-├── index.scss
-├── main.tsx
-├── pages
-│   ├── EpisodeDetail.tsx
-│   ├── Home.tsx
-│   ├── PodcastDetail.tsx
-│   └── index.ts
-├── router
-│   └── RouterWrapper.tsx
-├── styles
-│   ├── audio-player.scss
-│   ├── details.scss
-│   ├── episode.scss
-│   ├── globals.scss
-│   ├── grid.scss
-│   ├── header.scss
-│   ├── home.scss
-│   ├── layout.scss
-│   ├── podcast.scss
-│   ├── search.scss
-│   ├── sidebar.scss
-│   └── tile.scss
-├── types
-│   └── podcast.ts
-├── utils
-│   └── helpers.ts
-└── vite-env.d.ts
+Crud/
+│
+├── README.md
+├── package.json
+├── package-lock.json
+├── node_modules/
+│
+├── public/
+│   ├── index.html
+│   ├── styles.css
+│   ├── app.js
+│   └── images/
+│
+├── src/
+│   ├── server.js
+│   ├── middleware/
+│   ├── routes/
+│   │   └── index.js
+│   ├── controllers/
+│   └── models/
+│
+└── config/
+    └── config.js
+
 ```
 
 ### Key Features
