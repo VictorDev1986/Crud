@@ -1,4 +1,4 @@
-![Crud App](https://github.com/user-attachments/assets/e6a4f189-7d7c-40af-bf20-30d2b04928f1)
+
 
 # Podcaster
 
@@ -7,8 +7,8 @@ This project is a podcast application built using React, TypeScript, and Vite. I
 Hosted: [Podcaster](https://podcast-ex-test.vercel.app/)
 
 ## Demo
+![Crud App](https://github.com/user-attachments/assets/e6a4f189-7d7c-40af-bf20-30d2b04928f1)
 
-<https://github.com/contracamilo/podcast-ex-test/assets/27745159/966f2d1f-2f19-42c4-aa5e-e53f54b783f8>
 
 ## Quick Start Guide
 
