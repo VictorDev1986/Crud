@@ -327,13 +327,7 @@ app.listen(port, () => {
 });
 ```.
 
-### Mejoras a  futuro
 
-
-Agregar validación de datos para asegurarse de que los usuarios ingresen datos válidos.
-Agregar mensajes de error para informar a los usuarios de cualquier problema que surja.
-Mejorar la experiencia del usuario mediante la adición de animaciones o efectos visuales.
-Agregar funcionalidad para permitir a los usuarios filtrar o ordenar las entradas en la tabla
 
 
 
